@@ -1,0 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 90px; /* prevents section titles from being hidden under navbar */
+}

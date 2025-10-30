@@ -4,8 +4,14 @@ import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import vrHeadset from "../assets/VRH.jfif";
 
 export default function Footer() {
+   const icons = [
+    { Icon: Facebook, color: "#1877F2" },   // Facebook Blue
+    { Icon: Instagram, color: "#E4405F" },  // Instagram Pink
+    { Icon: Linkedin, color: "#0077B5" },   // LinkedIn Blue
+    { Icon: Youtube, color: "#FF0000" },    // YouTube Red
+  ];
   return (
-    <footer className="relative left-0 right-0 w-[100%] bg-gradient-to-t from-black via-[#0b0b0b] to-gray-900 text-gray-400 py-20 px-8 md:px-20 overflow-hidden">
+    <footer className="relative left-0 right-0 w-full bg-linear-to-t from-black via-[#0b0b0b] to-gray-900 text-gray-400 py-20 px-8 md:px-20 overflow-hidden">
       {/* === Background Accent Lights === */}
       <motion.div
         className="absolute -top-20 left-10 w-72 h-72 bg-purple-600/20 blur-3xl rounded-full"
@@ -41,17 +47,25 @@ export default function Footer() {
             Vortek is redefining what’s possible in virtual reality — blending immersive experiences,
             cutting-edge technology, and intuitive design to transport users beyond the limits of the physical world.
           </p>
-          <div className="flex gap-4 text-white mt-4">
-            {[Facebook, Instagram, Linkedin, Youtube].map((Icon, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Icon className="hover:text-gray-400 cursor-pointer" />
-              </motion.div>
-            ))}
-          </div>
+           <div className="flex gap-4 text-white mt-4">
+      {icons.map(({ Icon, color }, i) => (
+        <motion.div
+          key={i}
+          whileHover={{ scale: 1.2, rotate: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="cursor-pointer transition-colors duration-300"
+        >
+          <Icon
+            className="w-6 h-6 transition-colors duration-300"
+            style={{
+              color: "white",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = color)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "white")}
+          />
+        </motion.div>
+      ))}
+    </div>
         </div>
 
         {/* === Location === */}

@@ -1,29 +1,42 @@
-import React from "react";
-import { Menu, ArrowRight } from "lucide-react";
+import React, { useState } from "react";
+import { Menu, X, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const links = [
+    { name: "Home", id: "home" },
+    { name: "Feature", id: "feature" },
+    { name: "Explore", id: "explore" },
+    { name: "Testimonial", id: "testimonial" },
+  ];
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <header className="fixed top-1 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-[80%] flex items-center justify-between px-6 md:px-10 py-4 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-lg transition-all duration-500">
+    <header className="fixed top-2 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-[80%] flex items-center justify-between px-6 md:px-10 py-4 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-lg transition-all duration-500">
       {/* === Left: Logo === */}
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 bg-linear-to-br from-black to-gray-800 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+        <div className="w-9 h-9 bg-gradient-to-br from-black to-gray-800 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
           V
         </div>
         <span className="font-semibold text-gray-100 text-lg tracking-wide">
-          Vortek
+          SK_NeuraPlay
         </span>
       </div>
 
-      {/* === Middle: Navigation === */}
+      {/* === Middle: Desktop Navigation === */}
       <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-        {["Home", "About", "Service", "Feature", "Blog"].map((link) => (
+        {links.map((link) => (
           <a
-            key={link}
-            href="#"
+            key={link.id}
+            href={`#${link.id}`}
             className="relative group transition-all duration-300"
           >
             <span className="group-hover:text-white transition-all duration-300">
-              {link}
+              {link.name}
             </span>
             <span className="absolute bottom-[-3px] left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
           </a>
@@ -35,10 +48,42 @@ function Navbar() {
         <button className="hidden md:inline-flex items-center gap-2 px-5 py-2 text-sm font-medium border border-white/30 rounded-lg text-gray-200 hover:bg-white hover:text-black transition-all duration-300">
           Get started <ArrowRight size={16} />
         </button>
-        <button className="md:hidden p-2 rounded-lg border border-white/30 text-gray-200 hover:bg-white/10 transition-all duration-300">
-          <Menu size={18} />
+        <button
+          onClick={toggleMenu}
+          className="md:hidden p-2 rounded-lg border border-white/30 text-gray-200 hover:bg-white/10 transition-all duration-300"
+        >
+          {menuOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
+
+      {/* === Mobile Menu === */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-[70px] left-0 w-full bg-black/90 backdrop-blur-md rounded-2xl flex flex-col items-center py-6 gap-4 text-gray-200 text-sm font-medium md:hidden"
+          >
+            {links.map((link) => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={closeMenu}
+                className="w-full text-center py-2 hover:text-white transition-all duration-300"
+              >
+                {link.name}
+              </a>
+            ))}
+            <button
+              onClick={closeMenu}
+              className="flex items-center gap-2 mt-4 px-5 py-2 text-sm font-medium border border-white/30 rounded-lg text-gray-200 hover:bg-white hover:text-black transition-all duration-300"
+            >
+              Get started <ArrowRight size={16} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

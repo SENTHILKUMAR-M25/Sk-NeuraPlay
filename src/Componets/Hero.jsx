@@ -1,7 +1,7 @@
 import React from "react";
 import { Play } from "lucide-react";
 import { motion } from "framer-motion";
-import vrImage from "../assets/VRH.jfif";
+import vrImage from "../assets/Home.jpeg";
 import Partners from "./Partners.jsx";
 
 const Hero = () => {
