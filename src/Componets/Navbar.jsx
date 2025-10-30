@@ -1,11 +1,12 @@
-import React from 'react'
-import { Menu, ArrowRight } from 'lucide-react';
+import React from "react";
+import { Menu, ArrowRight } from "lucide-react";
+
 function Navbar() {
   return (
-    <header className="flex items-center justify-between px-8 py-5 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-lg transition-all duration-500">
+    <header className="fixed top-1 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-[80%] flex items-center justify-between px-6 md:px-10 py-4 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-lg transition-all duration-500">
       {/* === Left: Logo === */}
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 bg-gradient-to-br from-black to-gray-800 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+        <div className="w-9 h-9 bg-linear-to-br from-black to-gray-800 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
           V
         </div>
         <span className="font-semibold text-gray-100 text-lg tracking-wide">
@@ -24,7 +25,7 @@ function Navbar() {
             <span className="group-hover:text-white transition-all duration-300">
               {link}
             </span>
-            <span className="absolute bottom-[-3px] left-0 w-0 h-[2px] bg-white group-hover:w-full transition-all duration-300" />
+            <span className="absolute bottom-[-3px] left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
           </a>
         ))}
       </nav>
@@ -39,7 +40,7 @@ function Navbar() {
         </button>
       </div>
     </header>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

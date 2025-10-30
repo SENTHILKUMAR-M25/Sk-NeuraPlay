@@ -6,6 +6,7 @@ import Feature from './Componets/Feature.jsx'
 import Testimonial from './Componets/Testimonial.jsx'
 import Explore from './Componets/Explore.jsx'
 import Footer from './Componets/Footer.jsx'
+import Splash from './Componets/Splash.jsx'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
     <Explore />
     <Testimonial />
     <Footer />
+    <Splash />
     </>
   )
 }

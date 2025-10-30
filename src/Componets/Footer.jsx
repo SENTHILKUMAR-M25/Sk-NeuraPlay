@@ -1,11 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
-import vrHeadset from "../assets/VRH.jfif"; // logo or headset image
+import vrHeadset from "../assets/VRH.jfif";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-gradient-to-t from-black via-[#0b0b0b] to-gray-900 text-gray-400 py-20 px-8 md:px-20 overflow-hidden">
+    <footer className="relative left-0 right-0 w-[100%] bg-gradient-to-t from-black via-[#0b0b0b] to-gray-900 text-gray-400 py-20 px-8 md:px-20 overflow-hidden">
       {/* === Background Accent Lights === */}
       <motion.div
         className="absolute -top-20 left-10 w-72 h-72 bg-purple-600/20 blur-3xl rounded-full"
@@ -18,13 +18,13 @@ export default function Footer() {
         transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
       />
 
-      {/* === Footer Content === */}
+      {/* === Footer Content (Edge-to-Edge Grid) === */}
       <motion.div
         initial={{ opacity: 0, y: 80 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 z-10"
+        className="relative grid grid-cols-1 md:grid-cols-4 gap-10 w-full z-10"
       >
         {/* === Logo & Description === */}
         <div>
@@ -38,7 +38,7 @@ export default function Footer() {
             viewport={{ once: true }}
           />
           <p className="text-sm leading-relaxed mb-6 text-gray-400">
-            Vortek is redefining what’s possible in virtual reality — blending immersive experiences, 
+            Vortek is redefining what’s possible in virtual reality — blending immersive experiences,
             cutting-edge technology, and intuitive design to transport users beyond the limits of the physical world.
           </p>
           <div className="flex gap-4 text-white mt-4">
