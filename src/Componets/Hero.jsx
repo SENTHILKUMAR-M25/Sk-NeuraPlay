@@ -1,128 +1,149 @@
-import React from "react";
+import React, { useState } from "react";
 import { Play } from "lucide-react";
 import { motion } from "framer-motion";
 import vrImage from "../assets/Home.jpeg";
 import Partners from "./Partners.jsx";
 
 const Hero = () => {
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+
+  // === Mouse movement to control camera tilt ===
+  const handleMouseMove = (e) => {
+    const { innerWidth, innerHeight } = window;
+    const rotateY = ((e.clientX - innerWidth / 2) / innerWidth) * 25;
+    const rotateX = ((e.clientY - innerHeight / 2) / innerHeight) * 25;
+    setRotate({ x: -rotateX, y: rotateY });
+  };
+
   return (
-    <div className="relative overflow-hidden top-2">
-      {/* === Animated Gradient Background Circles === */}
+    <div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setRotate({ x: 0, y: 0 })}
+      className="relative min-h-screen w-full overflow-hidden flex flex-col justify-center items-center bg-[#030014]"
+      style={{
+        perspective: "1200px",
+        transformStyle: "preserve-3d",
+      }}
+    >
+      {/* === 3D WORLD === */}
       <motion.div
-        className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] bg-purple-400/30 blur-[120px] rounded-full z-0"
-        animate={{ y: [0, 20, 0], opacity: [0.6, 1, 0.6] }}
-        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] bg-blue-400/30 blur-[120px] rounded-full z-0"
-        animate={{ y: [0, -20, 0], opacity: [0.7, 1, 0.7] }}
-        transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
-      />
+        style={{
+          transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+          transformStyle: "preserve-3d",
+        }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        className="absolute inset-0 flex flex-col items-center justify-center"
+      >
+        {/* === Background glows === */}
+        <div
+          style={{ transform: "translateZ(-400px)" }}
+          className="absolute top-[-200px] left-[-200px] w-[600px] h-[600px] bg-purple-500/30 blur-[160px] rounded-full"
+        />
+        <div
+          style={{ transform: "translateZ(-300px)" }}
+          className="absolute bottom-[-200px] right-[-200px] w-[600px] h-[600px] bg-blue-500/30 blur-[160px] rounded-full"
+        />
 
-      {/* === Hero Section === */}
-      <section className="relative grid grid-cols-1 md:grid-cols-2 gap-10 px-6 sm:px-10 lg:px-16 xl:px-24 py-20 items-center bg-gradient-to-br from-white via-gray-50 to-gray-100 z-10">
-        {/* === Left Content === */}
-        <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="space-y-8 text-center md:text-left"
+        {/* === Floating Particles === */}
+        {[...Array(40)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute bg-white/30 rounded-full"
+            style={{
+              width: Math.random() * 3 + 1,
+              height: Math.random() * 3 + 1,
+              top: Math.random() * 100 + "%",
+              left: Math.random() * 100 + "%",
+              transform: `translateZ(${Math.random() * 600 - 300}px)`,
+            }}
+            animate={{
+              y: [0, -10, 0],
+              opacity: [0.4, 1, 0.4],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 5 + Math.random() * 5,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+
+        {/* === 3D HERO CONTENT === */}
+        <div
+          className="relative text-center px-6 sm:px-10 md:px-20 max-w-5xl"
+          style={{ transform: "translateZ(100px)" }}
         >
-          <p className="text-xs md:text-sm font-semibold tracking-widest text-gray-500 uppercase">
-            Futuristic VR
-          </p>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-pink-400"
+          >
+            ENTER THE <span className="text-white">VR DIMENSION</span>
+          </motion.h1>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-gray-900">
-            NEW FUTURE <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-500 to-pink-500">
-              DIMENSION
-            </span>
-          </h1>
-
-          {/* === Stats Section === */}
-          <div className="flex justify-center md:justify-start gap-10">
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="text-center bg-white/60 backdrop-blur-md p-4 rounded-2xl shadow-sm"
-            >
-              <div className="text-3xl font-bold text-gray-900">75%</div>
-              <div className="text-xs text-gray-500 uppercase tracking-wide">
-                Growth
-              </div>
-            </motion.div>
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="text-center bg-white/60 backdrop-blur-md p-4 rounded-2xl shadow-sm"
-            >
-              <div className="text-3xl font-bold text-gray-900">99%</div>
-              <div className="text-xs text-gray-500 uppercase tracking-wide">
-                Reality
-              </div>
-            </motion.div>
-          </div>
-
-          {/* === Description === */}
-          <p className="text-sm sm:text-base text-gray-600 max-w-xl mx-auto md:mx-0 leading-relaxed">
-            Experience a new dimension of entertainment and innovation with our
-            cutting-edge VR technology. Immerse yourself in worlds beyond
-            imagination and redefine your reality.
-          </p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-gray-300 mt-6 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mx-auto"
+          >
+            Step into a living 3D world where every motion, color, and shadow
+            responds to your presence. This is not flat design — this is true
+            depth and immersion.
+          </motion.p>
 
           {/* === Buttons === */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            style={{ transform: "translateZ(80px)" }}
+            className="flex flex-col sm:flex-row gap-5 justify-center mt-10"
+          >
             <motion.button
-              whileHover={{ scale: 1.07 }}
-              whileTap={{ scale: 0.97 }}
-              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base font-semibold"
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-4 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-2xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Get Started
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.07 }}
-              whileTap={{ scale: 0.97 }}
-              className="px-8 py-3 border border-gray-300 rounded-xl text-sm sm:text-base text-gray-700 flex items-center justify-center gap-2 hover:bg-gray-100 transition-all duration-300"
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-4 border border-gray-500 text-gray-300 rounded-2xl text-lg font-semibold flex items-center justify-center gap-2 hover:bg-gray-900 transition-all duration-300"
             >
-              <Play size={18} /> Watch a Demo
+              <Play size={20} /> Watch Demo
             </motion.button>
-          </div>
+          </motion.div>
+        </div>
 
-          {/* === Trusted By Section === */}
-          <div className="mt-10 flex flex-wrap justify-center md:justify-start gap-3 text-xs font-medium">
-            <div className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-full">
-              Trusted by Clients
-            </div>
-            <div className="bg-black text-white px-3 py-2 rounded-full">
-              20M+ Clients
-            </div>
-          </div>
-        </motion.div>
+        {/* === 3D Floating VR Image === */}
+        <motion.img
+          src={vrImage}
+          alt="VR headset"
+          style={{ transform: "translateZ(220px)" }}
+          className="absolute bottom-10 md:bottom-16 right-10 md:right-20 w-[300px] sm:w-[400px] md:w-[500px] rounded-3xl shadow-[0_0_80px_rgba(147,51,234,0.5)]"
+          animate={{
+            y: [0, -20, 0],
+            rotateZ: [0, 1, -1, 0],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 8,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.div>
 
-        {/* === Right Image === */}
-        <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-          viewport={{ once: true }}
-          className="relative flex items-center justify-center mt-10 md:mt-0"
-        >
-          {/* Glow Effect Behind Image */}
-          <div className="absolute w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-gradient-to-r from-purple-500/30 to-blue-500/30 blur-3xl rounded-full animate-pulse" />
-
-          {/* VR Image */}
-          <motion.img
-            src={vrImage}
-            alt="VR headset"
-            className="relative w-[85%] sm:w-[70%] md:w-[90%] max-w-lg object-cover rounded-3xl shadow-2xl"
-            whileHover={{ scale: 1.05, rotateY: 5 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          />
-        </motion.div>
-      </section>
-
-      {/* === Partners Section === */}
-      <Partners />
+      {/* === Partners at depth === */}
+      <motion.div
+        style={{ transform: "translateZ(50px)" }}
+        className="relative z-20 mt-10"
+      >
+        
+      </motion.div>
     </div>
   );
 };
