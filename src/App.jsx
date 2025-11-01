@@ -6,6 +6,7 @@ import Explore from "./Componets/Explore.jsx";
 import Testimonial from "./Componets/Testimonial.jsx";
 import Footer from "./Componets/Footer.jsx";
 import Splash from "./Componets/Splash.jsx";
+import Partners from "./Componets/Partners.jsx";
 
 import "./App.css";
 
@@ -16,8 +17,8 @@ function App() {
 
       <section id="home" className="min-h-screen">
         <Hero />
-      </section>
-
+      </section>  
+      <Partners />
       <section id="feature" className="min-h-screen">
         <Feature />
       </section>
