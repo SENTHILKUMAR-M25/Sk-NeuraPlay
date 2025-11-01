@@ -45,28 +45,6 @@ const Partners = () => {
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
 
-      {/* Floating particles for VR atmosphere */}
-      {[...Array(10)].map((_, i) => (
-        <motion.span
-          key={i}
-          className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 opacity-40"
-          animate={{
-            y: [0, -40, 0],
-            opacity: [0.2, 0.8, 0.2],
-          }}
-          transition={{
-            duration: 8 + i,
-            repeat: Infinity,
-            delay: i * 0.5,
-            ease: "easeInOut",
-          }}
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-          }}
-        />
-      ))}
-
       {/* Heading */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
